@@ -60,6 +60,7 @@ void OusterSensor::declare_parameters() {
     declare_parameter("timestamp_mode", "");
     declare_parameter("udp_profile_lidar", "");
     declare_parameter("use_system_default_qos", false);
+    declare_parameter("signal_multiplier", 0.0);
 }
 
 LifecycleNodeInterface::CallbackReturn OusterSensor::on_configure(
@@ -443,6 +444,7 @@ sensor::sensor_config OusterSensor::parse_config_from_ros_parameters() {
     auto lidar_mode_arg = get_parameter("lidar_mode").as_string();
     auto timestamp_mode_arg = get_parameter("timestamp_mode").as_string();
     auto udp_profile_lidar_arg = get_parameter("udp_profile_lidar").as_string();
+    auto signal_multiplier = get_parameter("signal_multiplier").as_double();
 
     if (lidar_port < 0 || lidar_port > 65535) {
         auto error_msg =
@@ -535,6 +537,17 @@ sensor::sensor_config OusterSensor::parse_config_from_ros_parameters() {
             mtp_dest = is_arg_set(mtp_dest_arg) ? mtp_dest_arg : std::string{};
             mtp_main = mtp_main_arg;
         }
+    }
+
+    //zzCJ Set signal multiplier from ros params
+    if(signal_multiplier > 0.0) {
+        ouster::sensor::check_signal_multiplier(signal_multiplier);
+
+        config.signal_multiplier = signal_multiplier;
+        auto info_msg = std::string("Signal multiplier set to: ") + std::to_string(signal_multiplier);
+        RCLCPP_INFO(get_logger(), info_msg.c_str());
+    } else {
+        RCLCPP_INFO(get_logger(), "Signal multiplier not set, usig default...");
     }
 
     return config;

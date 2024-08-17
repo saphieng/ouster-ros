@@ -17,6 +17,11 @@ ouster/os_driver:
     # 512x20, 1024x10, 1024x20, 2048x10, 4096x5 }. Leave empty to remain on
     # current the lidar mode
     lidar_mode: '2048x10'
+    # Signal_multiplier[optional]:S Set to 0.0 for default, else possible
+    # values are [0.25, 0.5, 1, 2, 3]. Values greater than 1.0 require the
+    # scan azimuth to be reduced by the same factor. 
+    # (i.e 2 mupltiplier will require only 180 degree scan window)
+    signal_multiplier: 0.5
     # timestamp_mode[optional]: method used to timestamp measurements; possible
     # values:
     # - TIME_FROM_INTERNAL_OSC
