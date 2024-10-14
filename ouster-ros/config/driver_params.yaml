@@ -16,12 +16,12 @@ ouster/os_driver:
     # lidar_mode[optional]: resolution and rate; possible values: { 512x10,
     # 512x20, 1024x10, 1024x20, 2048x10, 4096x5 }. Leave empty to remain on
     # current the lidar mode
-    lidar_mode: '512x10' # '2048x10'
+    lidar_mode: '2048x10'
     # Signal_multiplier[optional]:S Set to 0.0 for default, else possible
     # values are [0.25, 0.5, 1, 2, 3]. Values greater than 1.0 require the
     # scan azimuth to be reduced by the same factor. 
     # (i.e 2 mupltiplier will require only 180 degree scan window)
-    signal_multiplier: 0.5
+    signal_multiplier: 1.0
     # timestamp_mode[optional]: method used to timestamp measurements; possible
     # values:
     # - TIME_FROM_INTERNAL_OSC
@@ -40,7 +40,7 @@ ouster/os_driver:
     # - RNG15_RFL8_NIR8
     # - RNG19_RFL8_SIG16_NIR16_DUAL
     # - FUSA_RNG15_RFL8_NIR8_DUAL
-    udp_profile_lidar: 'RNG15_RFL8_NIR8' #'RNG19_RFL8_SIG16_NIR16'
+    udp_profile_lidar: 'RNG19_RFL8_SIG16_NIR16'
     # metadata[optional]: path to save metadata file to, if left empty a file
     # with the sensor hostname or ip will be crearted in ~/.ros folder.
     metadata: ''
@@ -91,4 +91,4 @@ ouster/os_driver:
     # - ouster_ros/os_point.h
     # - ouster_ros/sensor_point_types.h
     # - ouster_ros/common_point_types.h.
-    point_type: xyz
+    point_type: original
